@@ -1,7 +1,7 @@
 name: Build PlotSquared (MC 1.21)
 
 on:
-  workflow_dispatch:   # ← 关键：允许网页/API 手动触发
+  workflow_dispatch:  # 支持网页手动点击"Run workflow"
   push:
     branches: [ main, master ]
   pull_request:
@@ -12,24 +12,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up JDK 21
+      - name: Set up JDK 21 (MC 1.21 必需)
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 21
 
-      - name: Grant execute permission
+      - name: Grant Gradlew execute permission
         run: chmod +x ./gradlew
 
-      - name: Build Bukkit jar
-        run: ./gradlew clean :Bukkit:build
+      - name: Build plotsquared-bukkit module
+        run: ./gradlew clean :plotsquared-bukkit:build  # 修正后的命令
 
-      - name: Upload artifact
+      - name: Upload Bukkit plugin jar
         uses: actions/upload-artifact@v4
         with:
           name: PlotSquared-Bukkit-MC1.21
-          path: Bukkit/build/libs/plotsquared-bukkit-*-SNAPSHOT.jar
-          retention-days: 30
+          path: plotsquared-bukkit/build/libs/plotsquared-bukkit-*-SNAPSHOT.jar
+          retention-days: 30  # 产物保留30天，可自己改
