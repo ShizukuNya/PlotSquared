@@ -24,11 +24,11 @@ jobs:
       - name: Build Bukkit module
         run: ./gradlew clean :plotsquared-bukkit:build
 
-      - name: List outputs (debug)
-        run: ls -R plotsquared-bukkit/build/libs
+      - name: List output (debug)
+        run: ls -R Bukkit/build/libs
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: PlotSquared-Bukkit-MC1.21
-          path: plotsquared-bukkit/build/libs/plotsquared-bukkit-*.jar
+          path: Bukkit/build/libs/plotsquared-bukkit-*.jar
